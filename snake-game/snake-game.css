@@ -1,0 +1,13 @@
+body {
+    text-align:center;
+}
+
+.game-container {
+    height: 700px;
+    width: 100%;
+    border: 10px solid black;
+}
+
+canvas {
+
+}
