@@ -153,7 +153,7 @@ Game.Draw = function(context, snake) {
         }
 
         // Check Collision
-        if (this.collision(nx, ny) === true) {
+        if (this.collision(nx, ny)) {
             snake.restart();
             return;
         }
@@ -191,17 +191,18 @@ Game.Draw = function(context, snake) {
     };
 
     // Check Collision with snake and walls
-    // for (var i = 0; i < snake.stage.length.length; i++) {
-    //     var cell = snake.stage.length[i];
-    //     if (cell === nx || cell === ny) {
-    //         this.collision = true;
-    //     }
-    // }
+
     // Check Collision with walls
     this.collision = (nx, ny) => {
         if (nx === -1 || nx === (snake.stage.width / snake.stage.conf.cw) || ny === -1 || ny === (snake.stage.height / snake.stage.conf.cw)) {
             return true;
         }
+        // for (let i = 0; i < snake.stage.length.length; i++) {
+        //     let cell = snake.stage.length;
+        //     if (cell === nx || cell === ny) {
+        //         return true;
+        //     }
+        // }
         return false;
     }
 };
