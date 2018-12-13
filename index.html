@@ -2,22 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Snake Game Attempt</title>
+    <title>Snake Game</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="snake-game.css">
 </head>
-<body style="overflow-x: ">
+<body style="overflow-x: hidden">
 
+<div class="container">
     <header class="row text-white text-center">
         <div class="col-sm-8 offset-sm-2">
             <h1>Matthew's Snake Game</h1>
         </div>
     </header>
-    <section class="text-center">
-        <canvas class="game-container" id="stage" height="300" width="500"></canvas>
+    <section class="row my-4">
+        <div class="col-sm-6 offset-sm-3 text-center">
+            <button id="start" class="btn btn-primary">START</button>
+        </div>
     </section>
+    <section class="row text-center text-white">
+        <div class="col-sm-3 text-center">
+            <h1>SCORE</h1>
+            <p id="score" class="">0</p>
+        </div>
+        <canvas class="col-sm-6 game-container p-0" id="stage" height="300" width="550"></canvas>
+    </section>
+</div>
 
-
+<!--context.fillText(`Score: ${snake.stage.score}`, 5, (snake.stage.height - 5));-->
 
 
 

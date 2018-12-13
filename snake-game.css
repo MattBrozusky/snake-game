@@ -1,8 +1,18 @@
 body {
     background: linear-gradient(to bottom, #1f1c2c, #928dab);
+    height: 100vh;
 }
 
 .game-container {
     border: 10px solid black;
+    background-color: white;
+}
+
+#score {
+    font-size: xx-large;
+}
+
+.btn {
+    width: 50%;
 }
 

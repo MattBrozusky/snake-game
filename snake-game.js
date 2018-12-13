@@ -27,15 +27,33 @@ Keyboard.ControllerEvents = function() {
     this.pressKey = null;
     this.keymap   = Keyboard.Keymap;
 
-    // Keydown Event
+    // Keydown Event and Check for move backwards
     document.onkeydown = event => {
         self.pressKey = event.which;
+        if (this.getKey() === 'right'){
+            this.keymap[37] = 'right';
+            this.keymap[38] = 'up';
+            this.keymap[40] = 'down';
+        } else if (this.getKey() === 'left'){
+            this.keymap[39] = 'left';
+            this.keymap[38] = 'up';
+            this.keymap[40] = 'down';
+        } else if (this.getKey() === 'up'){
+            this.keymap[40] = 'up';
+            this.keymap[37] = 'left';
+            this.keymap[39] = 'right';
+        } else if (this.getKey() === 'down'){
+            this.keymap[38] = 'down';
+            this.keymap[37] = 'left';
+            this.keymap[39] = 'right';
+        }
     };
 
     // Get Key
     this.getKey = function() {
         return this.keymap[this.pressKey];
     };
+
 };
 
 /**
@@ -79,7 +97,7 @@ Component.Snake = function(canvas, conf) {
     // Init Snake
     this.initSnake = function() {
 
-        // Itaration in Snake Conf Size
+        // Iteration in Snake Conf Size
         for (let i = 0; i < this.stage.conf.size; i++) {
 
             // Add Snake Cells
@@ -105,13 +123,7 @@ Component.Snake = function(canvas, conf) {
 
     // Restart Stage
     this.restart = function() {
-        this.stage.length            = [];
-        this.stage.food              = {};
-        this.stage.score             = 0;
-        this.stage.direction         = 'right';
-        this.stage.keyEvent.pressKey = null;
-        this.initSnake();
-        this.initFood();
+        document.location.reload();
     };
 };
 
@@ -173,18 +185,36 @@ Game.Draw = function(context, snake) {
         // Draw Snake
         for (const cell of snake.stage.length) {
             this.drawCell(cell.x, cell.y);
+
+            // if (keyPress === 'right' || keyPress === 'down' || keyPress === 'left' || keyPress === 'undefined') {
+            //     if ((cell.x && cell.y) === (nx + 2 && ny + 2)){
+            //         snake.restart();
+            //     }
+            // } else if (keyPress === 'up'){
+            //     if ((cell.x && cell.y) === (nx - 2 && ny - 2)){
+            //         snake.restart();
+            //     }
+            // }
+        }
+
+        for(let i = 1; i < snake.stage.length; i++) {
+            console.log(nx);
+            console.log(snake.stage.length[i].x);
+            if(nx === snake.stage.length[i].x) {
+                snake.restart();
+            }
         }
 
         // Draw Food
         this.drawCell(snake.stage.food.x, snake.stage.food.y);
 
         // Draw Score
-        context.fillText(`Score: ${snake.stage.score}`, 5, (snake.stage.height - 5));
+        $('#score').html(snake.stage.score);
     };
 
     // Draw Cell
     this.drawCell = (x, y) => {
-        context.fillStyle = 'rgb(180, 30, 255)';
+        context.fillStyle = 'rgb(76, 69, 94)';
         context.beginPath();
         context.arc((x * snake.stage.conf.cw + 6), (y * snake.stage.conf.cw + 6), 4, 0, 2 * Math.PI, false);
         context.fill();
@@ -194,18 +224,10 @@ Game.Draw = function(context, snake) {
 
     // Check Collision with walls
     this.collision = (nx, ny) => {
-        if (nx === -1 || nx === (snake.stage.width / snake.stage.conf.cw) || ny === -1 || ny === (snake.stage.height / snake.stage.conf.cw)) {
-            return true;
-        }
-        // for (let i = 0; i < snake.stage.length.length; i++) {
-        //     let cell = snake.stage.length;
-        //     if (cell === nx || cell === ny) {
-        //         return true;
-        //     }
-        // }
-        return false;
+        return (nx === -1 || nx === (snake.stage.width / snake.stage.conf.cw) || ny === -1 || ny === (snake.stage.height / snake.stage.conf.cw));
     }
 };
+
 
 
 /**
@@ -225,8 +247,18 @@ Game.Snake = (elementId, conf) => {
 
 
 /**
- * Window Load
+ * Start and Stop
  */
-window.onload = () => {
-    const snake = Game.Snake('stage', {fps: 100, size: 4});
-};
+let starter = 1;
+let btnType = $('#start');
+$(document).on('click', '#start', function () {
+    if (starter % 2 === 0){
+        document.location.reload();
+        btnType.html('START');
+        starter ++;
+    } else{
+        Game.Snake('stage', {fps: 100, size: 4});
+        btnType.html('STOP');
+        starter++
+    }
+});
