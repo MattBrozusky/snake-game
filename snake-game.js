@@ -187,23 +187,25 @@ Game.Draw = function(context, snake) {
             this.drawCell(cell.x, cell.y);
 
             // if (keyPress === 'right' || keyPress === 'down' || keyPress === 'left' || keyPress === 'undefined') {
-            //     if ((cell.x && cell.y) === (nx + 2 && ny + 2)){
+            //     if ((cell.x && cell.y) === (nx && ny)){
             //         snake.restart();
+            //         console.log("fail");
             //     }
             // } else if (keyPress === 'up'){
-            //     if ((cell.x && cell.y) === (nx - 2 && ny - 2)){
-            //         snake.restart();
+            //     if ((cell.x && cell.y) === (nx && ny)){
+            //         // snake.restart();
+            //         console.log("dumb");
             //     }
             // }
         }
 
-        for(let i = 1; i < snake.stage.length; i++) {
-            console.log(nx);
-            console.log(snake.stage.length[i].x);
-            if(nx === snake.stage.length[i].x) {
-                snake.restart();
-            }
-        }
+        // for(let i = 1; i < snake.stage.length; i++) {
+        //     console.log(nx);
+        //     console.log(snake.stage.length[i].x);
+        //     if(nx === snake.stage.length[i].x) {
+        //         snake.restart();
+        //     }
+        // }
 
         // Draw Food
         this.drawCell(snake.stage.food.x, snake.stage.food.y);
